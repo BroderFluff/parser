@@ -1,2 +1,5 @@
-parser: main.o lexer.o
-	gcc -o parser main.o lexer.o -I.
+parser: main.o lexer.o token.o
+	gcc -o parser main.o lexer.o token.o -I.
+
+clean:
+	rm *.o parser

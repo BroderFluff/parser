@@ -1,8 +1,7 @@
 #ifndef LEXER_H__
 #define LEXER_H__
 
-#include <assert.h>
-#include <string.h>
+#include "token.h"
 
 /**
  * Holds lexer-state for parser

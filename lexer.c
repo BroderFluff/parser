@@ -1,5 +1,7 @@
 #include <ctype.h>
 #include <stdlib.h>
+#include <assert.h>
+#include "token.h"
 #include "lexer.h"
 
 #define VALIDATE_LEXER(lex) \
@@ -12,6 +14,31 @@ struct lexer {
     const char *    str;
     int             line;
 };
+
+struct lexer* lexer_alloc()
+{
+    struct lexer *lex = malloc(sizeof (struct lexer));
+    return lex;
+}
+
+void lexer_free(struct lexer *lex)
+{
+    if (!lex) {
+        return;
+    }
+    free(lex);
+}
+
+int lexer_init_str(struct lexer *lex, const char *str)
+{
+    lex->c = lex->str = str;
+    lex->line = 1;
+}
+
+int lexer_is_eof(const struct lexer *lex)
+{
+    return lex->c && (*lex->c == '\0');
+}
 
 static int skip_spaces(struct lexer *lex)
 {
@@ -34,11 +61,10 @@ static int read_name(struct lexer *lex, struct token *tok)
     while (!lexer_is_eof(lex) &&
             isalpha(*lex->c) ||
             isdigit(*lex->c)) {
-        tok->str[tok->len++] = *lex->c;
+        token_append_char(tok, *lex->c);
         ++(lex->c);
     }
-    tok->str[tok->len] = '\0';
-    tok->type = TT_NAME;
+    token_finish(tok, TT_NAME);
     return 0;
 }
 
@@ -46,28 +72,10 @@ static int read_number(struct lexer *lex, struct token *tok)
 {
     token_clear(tok);
     while (lex->c && isdigit(*lex->c)) {
-        tok->str[tok->len++] = *lex->c;
+        token_append_char(tok, *lex->c);
         ++(lex->c);
     }
-    tok->str[tok->len] = '\0';
-    tok->type = TT_INTEGER;
-}
-
-struct lexer* lexer_alloc()
-{
-    struct lexer *lex = malloc(sizeof (struct lexer));
-    return lex;
-}
-
-int lexer_init_str(struct lexer *lex, const char *str)
-{
-    lex->c = lex->str = str;
-    lex->line = 1;
-}
-
-int lexer_is_eof(const struct lexer *lex)
-{
-    return lex->c && (*lex->c == '\0');
+    token_finish(tok, TT_INTEGER);
 }
 
 int lexer_next_token(struct lexer *lex, struct token *tok)

@@ -1,4 +1,5 @@
 #include "token.h"
+#include <assert.h>
 #include <stdlib.h>
 
 struct token {
@@ -21,11 +22,30 @@ void token_free(struct token *tok)
     free(tok);
 }
 
-static void token_clear(struct token *tok)
+void token_clear(struct token *tok)
 {
     tok->type = TT_NONE;
     tok->str[0] = '\0';
     tok->len = 0;
+}
+
+void token_append_char(struct token *tok, int ch)
+{
+    if (tok->len >= TOKEN_MAX_LENGTH) {
+        return;
+    }
+    tok->str[tok->len++] = ch;
+}
+
+void token_finish(struct token *tok, enum token_type type)
+{
+    tok->str[tok->len] = '\0';
+    tok->type = type;
+}
+
+enum token_type token_get_type(const struct token *tok)
+{
+    return tok->type;
 }
 
 const char *token_get_name(const struct token *tok)
