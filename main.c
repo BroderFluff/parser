@@ -16,10 +16,10 @@ int main(void)
 
         switch (tok.type) {
             case TT_NAME:
-                printf("Found TT_NAME : %s", token_as_name(&tok));
+                printf("Found TT_NAME : %s\n", token_as_name(&tok));
                 break;
             case TT_INTEGER:
-                printf("Found TT_INTEGER : %d", token_as_integer(&tok));
+                printf("Found TT_INTEGER : %d\n", token_as_integer(&tok));
                 break;
             case TT_NONE:
             default:
