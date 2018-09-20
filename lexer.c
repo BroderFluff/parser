@@ -1,6 +1,5 @@
-#include "lexer.h"
-#include <stdlib.h>
 #include <ctype.h>
+#include "lexer.h"
 
 const char *token_as_name(const struct token *tok)
 {
