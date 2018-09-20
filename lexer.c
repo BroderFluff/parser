@@ -60,6 +60,8 @@ static int read_number(struct lexer *lex, struct token *tok)
         tok->str[tok->len++] = *lex->c;
         ++(lex->c);
     }
+    tok->str[tok->len] = '\0';
+    tok->type = TT_INTEGER;
 }
 
 int lexer_init_str(struct lexer *lex, const char *str)
@@ -68,7 +70,7 @@ int lexer_init_str(struct lexer *lex, const char *str)
     lex->line = 1;
 }
 
-int next_token(struct lexer *lex, struct token *tok)
+int lexer_next_token(struct lexer *lex, struct token *tok)
 {
     skip_spaces(lex);
 
