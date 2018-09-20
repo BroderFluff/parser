@@ -26,7 +26,7 @@ static int skip_spaces(const char **c)
 static int read_name(struct lexer *lex, struct token *tok)
 {
     tok->len = 0;
-    while (lex->c && isalpha(lex->c)) {
+    while (lex->c && isalpha(*lex->c)) {
         tok->str[tok->len++] = *lex->c;
         ++(lex->c);
     }
@@ -38,7 +38,7 @@ static int read_name(struct lexer *lex, struct token *tok)
 static int read_number(struct lexer *lex, struct token *tok)
 {
     tok->len = 0;
-    while (lex->c && isdigit(lex->c)) {
+    while (lex->c && isdigit(*lex->c)) {
         lex->str[tok->len++] = *lex->c;
         ++(lex->c);
     }
@@ -50,9 +50,9 @@ int next_token(struct lexer *lex, struct token *tok)
     if (is_eof(lex)) {
         return -1;
     }
-    if (isalpha(lex->c)) {
+    if (isalpha(*lex->c)) {
         return read_name(lex, tok);
-    } else if (isdigit(lex->c)) {
+    } else if (isdigit(*lex->c)) {
         return read_number(lex, tok);
     }
 
