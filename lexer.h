@@ -28,8 +28,10 @@ int                 token_as_integer(const struct token *tok);
  * Holds lexer-state for parser
  */
 struct lexer {
+    // Points to current position in str
     const char *    c;
-    char *          str;
+    // Points to string currently being read
+    const char *    str;
     int             line;
 };
 
