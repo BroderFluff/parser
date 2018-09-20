@@ -6,7 +6,7 @@ int main(void)
 {
     printf("begin parsen\n");
     struct lexer lex;
-    lex.c = lex.str = "hej";
+    lex.c = lex.str = "hej kaka apa 1 2 9";
 
     printf("str to lex: %s\n", lex.str);
 
