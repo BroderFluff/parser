@@ -10,10 +10,20 @@ int main(void)
 
     printf("str to lex: %s\n", lex.str);
 
-    while (!lexer_is_eof(&lex))
-    {
+    while (!lexer_is_eof(&lex)) {}
         struct token tok;
         lexer_next_token(&lex, &tok);
-        printf("found token: %s\n", tok.str);
+
+        switch (tok.type) {
+            case TT_NAME:
+                printf("Found TT_NAME : %s", token_as_name(&tok));
+                break;
+            case TT_INTEGER:
+                printf("Found TT_INTEGER : %d", token_as_integer(&tok));
+                break;
+            case TT_NONE:
+            default:
+            break;
+        }
     }
 }
