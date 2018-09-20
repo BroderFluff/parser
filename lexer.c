@@ -5,6 +5,20 @@
 #define VALIDATE_LEXER(lex) \
     assert(lex->c);
 
+struct token {
+    enum token_type type;
+    char            str[TOKEN_MAX_LENGTH];
+    int             len;
+};
+
+struct lexer {
+    // Points to current position in str
+    const char *    c;
+    // Points to string currently being read
+    const char *    str;
+    int             line;
+};
+
 const char *token_as_name(const struct token *tok)
 {
     assert(tok->type == TT_NAME);

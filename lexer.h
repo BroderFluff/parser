@@ -15,11 +15,7 @@ enum token_type {
 /**
  * A string token produced by lexer
  */
-struct token {
-    enum token_type type;
-    char            str[TOKEN_MAX_LENGTH];
-    int             len;
-};
+struct token;
 
 const char *        token_as_name(const struct token *tok);
 int                 token_as_integer(const struct token *tok);
@@ -27,13 +23,7 @@ int                 token_as_integer(const struct token *tok);
 /**
  * Holds lexer-state for parser
  */
-struct lexer {
-    // Points to current position in str
-    const char *    c;
-    // Points to string currently being read
-    const char *    str;
-    int             line;
-};
+struct lexer;
 
 int                 lexer_init_str(struct lexer *lex, const char *str);
 static inline int   lexer_is_eof(const struct lexer *lex) { return lex->c && (*lex->c == '\0'); }
