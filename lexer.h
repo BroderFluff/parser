@@ -27,8 +27,8 @@ int                 token_as_integer(const struct token *tok);
  * Holds lexer-state for parser
  */
 struct lexer {
-    char *          str;
-    char *          c;
+    const char *          str;
+    const char *          c;
 };
 
 static inline int          is_eof(const struct lexer *lex) { return (*lex->c == '\0'); }
