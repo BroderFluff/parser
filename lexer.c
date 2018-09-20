@@ -13,8 +13,6 @@ int token_as_integer(const struct token *tok)
     return strtol(tok->str, NULL, 10);
 }
 
-
-
 static int skip_spaces(char **c)
 {
     const char *start = c;
@@ -52,6 +50,10 @@ int next_token(struct lexer *lex, struct token *tok)
         return -1;
     }
     if (isalpha(lex->c)) {
-        return read_name(lex, *tok);
+        return read_name(lex, tok);
+    } else if (isdigit(lex->c)) {
+        return read_number(lex, tok);
     }
+
+    return 0;
 }
