@@ -84,6 +84,11 @@ int lexer_init_str(struct lexer *lex, const char *str)
     lex->line = 1;
 }
 
+int lexer_is_eof(const struct lexer *lex)
+{
+    return lex->c && (*lex->c == '\0');
+}
+
 int lexer_next_token(struct lexer *lex, struct token *tok)
 {
     skip_spaces(lex);

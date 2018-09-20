@@ -26,7 +26,7 @@ int                 token_as_integer(const struct token *tok);
 struct lexer;
 
 int                 lexer_init_str(struct lexer *lex, const char *str);
-static inline int   lexer_is_eof(const struct lexer *lex) { return lex->c && (*lex->c == '\0'); }
+int                 lexer_is_eof(const struct lexer *lex);
 int                 lexer_next_token(struct lexer *lex, struct token *tok);
 
 #endif // LEXER_H__
