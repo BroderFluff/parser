@@ -65,7 +65,7 @@ static int read_name(struct lexer *lex, struct token *tok)
         ++(lex->c);
     }
     token_finish(tok, TT_NAME);
-    return 0;
+    return tok->len;
 }
 
 static int read_number(struct lexer *lex, struct token *tok)
@@ -76,6 +76,7 @@ static int read_number(struct lexer *lex, struct token *tok)
         ++(lex->c);
     }
     token_finish(tok, TT_INTEGER);
+    return tok->len;
 }
 
 int lexer_next_token(struct lexer *lex, struct token *tok)
@@ -93,4 +94,16 @@ int lexer_next_token(struct lexer *lex, struct token *tok)
     }
 
     return 0;
+}
+
+int lexer_expect_type(struct lexer *lex, struct token *tok, enum token_type type)
+{
+    int num = lexer_next_token(lex, tok);
+    if (num > 0) {
+        if (tok->type != type) {
+            return 0;
+        }
+    }
+
+    return num;    
 }

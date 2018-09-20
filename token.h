@@ -12,7 +12,11 @@ enum token_type {
 /**
  * A string token produced by lexer
  */
-struct token;
+struct token {
+    enum token_type type;
+    char            str[TOKEN_MAX_LENGTH];
+    int             len;
+};
 
 // Alloc token instance
 struct token *      token_alloc();

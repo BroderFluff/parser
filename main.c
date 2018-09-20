@@ -2,15 +2,26 @@
 #include <stdio.h>
 #include "lexer.h"
 #include "token.h"
+#include "cmd_parse.h"
 
 int main(void)
 {
-    printf("begin parsen\n");
     struct lexer *lex = lexer_alloc();
-    lexer_init_str(lex, "hej kaka apa 1 2 9 kakor er mums");
+    lexer_init_str(lex, "setLEDCount 20 setLEDCount 30");
 
-    struct token *tok = token_alloc();
+    while (!lexer_is_eof(lex)) {
+        struct command *cmd = parse_next_command(lex);
+        if (cmd) {
+            printf("num params: %d\n", cmd->num_params);
+            printf("param 0: %d\n", cmd->params[0]);
+        } else {
+            printf("command parse failed..\n");
+        }
+    }
+    
 
+
+#if 0
     while (!lexer_is_eof(lex)) {
         lexer_next_token(lex, tok);
         switch (token_get_type(tok)) {
@@ -25,7 +36,7 @@ int main(void)
             break;
         }
     }
+#endif
 
     lexer_free(lex);
-    token_free(tok);
 }

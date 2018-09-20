@@ -2,12 +2,6 @@
 #include <assert.h>
 #include <stdlib.h>
 
-struct token {
-    enum token_type type;
-    char            str[TOKEN_MAX_LENGTH];
-    int             len;
-};
-
 struct token* token_alloc()
 {
     struct token *tok = (struct token *) malloc(sizeof (struct token));
