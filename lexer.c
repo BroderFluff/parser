@@ -57,7 +57,7 @@ static int read_number(struct lexer *lex, struct token *tok)
 {
     tok->len = 0;
     while (lex->c && isdigit(*lex->c)) {
-        lex->str[tok->len++] = *lex->c;
+        tok->str[tok->len++] = *lex->c;
         ++(lex->c);
     }
 }
