@@ -41,7 +41,7 @@ static int skip_spaces(struct lexer *lex)
 static int read_name(struct lexer *lex, struct token *tok)
 {
     VALIDATE_LEXER(lex);
-    tok->len = 0;
+    token_clear(tok);
     while (!lexer_is_eof(lex) &&
             isalpha(*lex->c) ||
             isdigit(*lex->c)) {
@@ -55,7 +55,7 @@ static int read_name(struct lexer *lex, struct token *tok)
 
 static int read_number(struct lexer *lex, struct token *tok)
 {
-    tok->len = 0;
+    token_clear(tok);
     while (lex->c && isdigit(*lex->c)) {
         tok->str[tok->len++] = *lex->c;
         ++(lex->c);
