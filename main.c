@@ -8,6 +8,8 @@ int main(void)
     struct lexer lex;
     lex.c = lex.str = "hej 1 2 3";
 
+    printf("str to lex: %s", lex.str);
+
     while (!is_eof(&lex))
     {
         struct token tok;
