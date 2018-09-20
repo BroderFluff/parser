@@ -12,6 +12,7 @@ struct lexer {
     const char *    c;
     // Points to string currently being read
     const char *    str;
+    // Current line number
     int             line;
 };
 

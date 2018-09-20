@@ -7,7 +7,7 @@
 int main(void)
 {
     struct lexer *lex = lexer_alloc();
-    lexer_init_str(lex, "setLEDCount 20 setLEDCount 30");
+    lexer_init_str(lex, "setLEDCount 20\nsetLEDCount ll");
 
     while (!lexer_is_eof(lex)) {
         struct command *cmd = parse_next_command(lex);
@@ -19,24 +19,5 @@ int main(void)
         }
     }
     
-
-
-#if 0
-    while (!lexer_is_eof(lex)) {
-        lexer_next_token(lex, tok);
-        switch (token_get_type(tok)) {
-            case TT_NAME:
-                printf("Found TT_NAME : %s\n", token_get_name(tok));
-                break;
-            case TT_INTEGER:
-                printf("Found TT_INTEGER : %d\n", token_get_integer(tok));
-                break;
-            case TT_NONE:
-            default:
-            break;
-        }
-    }
-#endif
-
     lexer_free(lex);
 }

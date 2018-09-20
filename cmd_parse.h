@@ -3,8 +3,6 @@
 
 #include "lexer.h"
 
-//#define MAX_NUM_COMMANDS 256
-
 enum command_type {
     CMD_SET_DEBUG,
     CMD_GET_VERSION_NUMBER,
@@ -24,9 +22,10 @@ enum command_type {
 struct command {
     enum command_type       type;
     int                     num_params;
-    int                     params[];
+    int                     params[8];
 };
 
+void                        register_command(const char *name, int num_params);
 struct command *            parse_next_command(struct lexer *lex);
 
 struct command_queue {

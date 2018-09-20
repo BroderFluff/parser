@@ -4,12 +4,10 @@
 #include <string.h>
 #include <stdio.h>
 
-#define MAX_NUM_COMMANDS 256
+#define MAX_NUM_COMMANDS    256
 
-//static const int        MAX_NUM_COMMANDS = 256;
-
-struct command          command_pool[MAX_NUM_COMMANDS];
-static int              num_alloced = 0;
+struct command              command_pool[MAX_NUM_COMMANDS];
+static int                  num_alloced = 0;
 
 static struct command *alloc_command(enum command_type type)
 {
@@ -20,18 +18,24 @@ static struct command *alloc_command(enum command_type type)
     return cmd;
 }
 
+static void command_add_param(struct command *cmd, int param)
+{
+    cmd->params[cmd->num_params++] = param;
+}
+
 static struct command* parse_set_led_count(struct lexer *lex)
 {
     struct command *    cmd = NULL;
     struct token        tok;
 
+    cmd = alloc_command(CMD_SET_LED_COUNT);
+
     if (!lexer_expect_type(lex, &tok, TT_INTEGER)) {
-        printf("Expected integer..\n");
+        printf("Parse error: Expected command param but found \"%s\"\n", tok.str);
         return NULL;
     }
 
-    cmd = alloc_command(CMD_SET_LED_COUNT);
-    cmd->params[cmd->num_params++] = token_get_integer(&tok);
+    command_add_param(cmd, token_get_integer(&tok));
     return cmd;
 }
 
@@ -46,7 +50,7 @@ struct command* parse_next_command(struct lexer *lex)
     if (strcmp(token_get_name(&tok), "setLEDCount") == 0) {
         return parse_set_led_count(lex);
     }
-    
+
     return NULL;
 }
 
