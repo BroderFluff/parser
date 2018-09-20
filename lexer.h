@@ -31,7 +31,7 @@ struct lexer {
     char *          c;
 };
 
-inline int          is_eof(struct lexer *lex) { return (lex->c == '\0'); }
+inline int          is_eof(struct lexer *lex) { return (*lex->c == '\0'); }
 int                 next_token(struct lexer *lex, struct token *tok);
 
 #endif // LEXER_H__
