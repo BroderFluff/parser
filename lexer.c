@@ -70,7 +70,7 @@ int lexer_init_str(struct lexer *lex, const char *str)
 
 int next_token(struct lexer *lex, struct token *tok)
 {
-    skip_spaces(&lex->c);
+    skip_spaces(lex);
 
     if (lexer_is_eof(lex)) {
         return 0;
