@@ -4,27 +4,13 @@
 #include <assert.h>
 #include <string.h>
 
-#define TOKEN_MAX_LENGTH 32
-
-enum token_type {
-    TT_NONE,
-    TT_NAME,
-    TT_INTEGER,
-};
-
-/**
- * A string token produced by lexer
- */
-struct token;
-
-const char *        token_as_name(const struct token *tok);
-int                 token_as_integer(const struct token *tok);
-
 /**
  * Holds lexer-state for parser
  */
 struct lexer;
 
+struct lexer *      lexer_alloc();
+void                lexer_free(struct lexer *lex);
 int                 lexer_init_str(struct lexer *lex, const char *str);
 int                 lexer_is_eof(const struct lexer *lex);
 int                 lexer_next_token(struct lexer *lex, struct token *tok);

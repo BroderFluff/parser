@@ -5,12 +5,6 @@
 #define VALIDATE_LEXER(lex) \
     assert(lex->c);
 
-struct token {
-    enum token_type type;
-    char            str[TOKEN_MAX_LENGTH];
-    int             len;
-};
-
 struct lexer {
     // Points to current position in str
     const char *    c;
@@ -18,25 +12,6 @@ struct lexer {
     const char *    str;
     int             line;
 };
-
-const char *token_as_name(const struct token *tok)
-{
-    assert(tok->type == TT_NAME);
-    return tok->str;
-}
-
-int token_as_integer(const struct token *tok)
-{
-    assert(tok->type == TT_INTEGER);
-    return strtol(tok->str, NULL, 10);
-}
-
-static void token_clear(struct token *tok)
-{
-    tok->type = TT_NONE;
-    tok->str[0] = '\0';
-    tok->len = 0;
-}
 
 static int skip_spaces(struct lexer *lex)
 {
@@ -76,6 +51,12 @@ static int read_number(struct lexer *lex, struct token *tok)
     }
     tok->str[tok->len] = '\0';
     tok->type = TT_INTEGER;
+}
+
+struct lexer* lexer_alloc()
+{
+    struct lexer *lex = malloc(sizeof (struct lexer));
+    return lex;
 }
 
 int lexer_init_str(struct lexer *lex, const char *str)

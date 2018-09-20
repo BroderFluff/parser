@@ -5,14 +5,13 @@
 int main(void)
 {
     printf("begin parsen\n");
-    struct lexer lex;
-    lexer_init_str(&lex, "hej kaka apa 1 2 9");
+    struct lexer *lex = lexer_alloc("hej kaka apa 1 2 9");
+    struct token *tok = token_alloc();
 
-    printf("str to lex: %s\n", lex.str);
+    printf("str to lex: %s\n", lex->str);
 
-    while (!lexer_is_eof(&lex)) {
-        struct token tok;
-        lexer_next_token(&lex, &tok);
+    while (!lexer_is_eof(lex)) {
+        lexer_next_token(lex, &tok);
 
         switch (tok.type) {
             case TT_NAME:
