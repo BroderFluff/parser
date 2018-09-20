@@ -32,7 +32,7 @@ static int read_name(struct lexer *lex, struct token *tok)
     }
     tok->str[tok->len] = '\0';
     tok->type = TT_NAME;
-    return 
+    return 0;
 }
 
 static int read_number(struct lexer *lex, struct token *tok)
