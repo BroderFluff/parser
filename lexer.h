@@ -7,6 +7,7 @@
 #define TOKEN_MAX_LENGTH 32
 
 enum token_type {
+    TT_NONE,
     TT_NAME,
     TT_INTEGER,
 };
@@ -27,11 +28,13 @@ int                 token_as_integer(const struct token *tok);
  * Holds lexer-state for parser
  */
 struct lexer {
-    char *          str;
     const char *    c;
+    char *          str;
+    int             line;
 };
 
-static inline int   is_eof(const struct lexer *lex) { return (*lex->c == '\0'); }
-int                 next_token(struct lexer *lex, struct token *tok);
+int                 lexer_init_str(struct lexer *lex, const char *str);
+static inline int   lexer_is_eof(const struct lexer *lex) { return lex->c && (*lex->c == '\0'); }
+int                 lexer_next_token(struct lexer *lex, struct token *tok);
 
 #endif // LEXER_H__

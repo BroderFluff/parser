@@ -6,11 +6,11 @@ int main(void)
 {
     printf("begin parsen\n");
     struct lexer lex;
-    lex.c = lex.str = "hej kaka apa 1 2 9";
+    lexer_init_str(&lex, "hej kaka apa 1 2 9");
 
     printf("str to lex: %s\n", lex.str);
 
-    while (!is_eof(&lex))
+    while (!lexer_is_eof(&lex))
     {
         struct token tok;
         tok.len = 0;
