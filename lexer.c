@@ -72,7 +72,7 @@ int next_token(struct lexer *lex, struct token *tok)
 {
     skip_spaces(&lex->c);
 
-    if (is_eof(lex)) {
+    if (lexer_is_eof(lex)) {
         return 0;
     }
 
