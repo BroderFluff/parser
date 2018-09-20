@@ -13,6 +13,7 @@ int main(void)
     while (!is_eof(&lex))
     {
         struct token tok;
+        tok.len = 0;
         next_token(&lex, &tok);
         printf("found token: %s\n", tok.str);
     }
