@@ -42,7 +42,7 @@ static int read_name(struct lexer *lex, struct token *tok)
 {
     VALIDATE_LEXER(lex);
     tok->len = 0;
-    while (!lexer_is_eof(ex) &&
+    while (!lexer_is_eof(lex) &&
             isalpha(*lex->c) ||
             isdigit(*lex->c)) {
         tok->str[tok->len++] = *lex->c;
