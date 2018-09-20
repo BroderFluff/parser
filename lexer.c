@@ -16,7 +16,7 @@ int token_as_integer(const struct token *tok)
 
 static int skip_spaces(char **c)
 {
-    const char *start = c;
+    const char *start = *c;
     while (*c && isspace(*c)) {
         ++(*c);
     }
