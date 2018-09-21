@@ -56,7 +56,7 @@ struct command* parse_next_command(struct lexer *lex)
         printf("Expected command name..");
         return NULL;
     }
-
+    
     const char *cmd_name = token_get_name(&tok);
     if (strcmp(cmd_name, "setLEDCount") == 0) {
         return parse_set_led_count(lex);

@@ -34,6 +34,7 @@ int lexer_init_str(struct lexer *lex, const char *str)
 {
     lex->c = lex->str = str;
     lex->line = 1;
+    return 1;
 }
 
 int lexer_is_eof(const struct lexer *lex)
@@ -60,8 +61,8 @@ static int read_name(struct lexer *lex, struct token *tok)
     VALIDATE_LEXER(lex);
     token_clear(tok);
     while (!lexer_is_eof(lex) &&
-            isalpha(*lex->c) ||
-            isdigit(*lex->c)) {
+            (isalpha(*lex->c) ||
+            isdigit(*lex->c))) {
         token_append_char(tok, *lex->c);
         ++(lex->c);
     }
