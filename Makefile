@@ -8,6 +8,8 @@ CPPFLAGS += \
 # Compiler flags
 CFLAGS += \
 	-Wall \
+	-Wextra \
+	-pedantic \
 	-O2
 # Linker flags
 LDFLAGS += 
