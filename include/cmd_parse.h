@@ -22,21 +22,16 @@ enum cmd_type {
 };
 
 struct cmd_desc {
-    enum cmd_type       cmd_type;
-    const char *        name;
-    int                 num_params;
+    enum cmd_type               cmd_type;
+    const char *                name;
+    int                         num_params;
 };
 
-extern const struct cmd_desc cmd_descs[];
- 
-/*
-struct cmd {
-    enum cmd_type           type;
-    int                     num_params;
-    int                     params[8];
-};
-*/
+//extern const struct cmd_desc    cmd_descs[];
 
-struct cmd *            parse_next_command(struct lexer *lex);
+int                     parse_next_inst(struct lexer *lex, int *inst_base);
+
+const struct cmd_desc *         parse_get_cmd(enum cmd_type type);
+struct cmd *                    parse_next_command(struct lexer *lex);
 
 #endif // CMD_PARSE_H__

@@ -38,7 +38,9 @@ static void vm_add(int inst) {
     }
 }
 
-struct cmd* parse_next_command(struct lexer *lex)
+int parse_
+
+int parse_next_command(struct lexer *lex)
 {
     struct token tok;
     if (!lexer_expect_type(lex, &tok, TT_NAME)) {
@@ -52,7 +54,7 @@ struct cmd* parse_next_command(struct lexer *lex)
         if (strcmp(cmd_name, cmd_descs[i].name) == 0) {
             for (int i = 0; i < cmd_descs[i].num_params; ++i) {
                 if (lexer_is_eof(lex)) {
-                    printf("Unexpected end of command-line..");
+                    printf("Unexpected end-of-file..");
                     return NULL;
                 } else if (lexer_expect_type(lex, &tok, TT_INTEGER)) {
                     vm_add(token_get_integer(&tok));

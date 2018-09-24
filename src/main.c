@@ -1,11 +1,18 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "lexer.h"
-#include "token.h"
+#include "vm.h"
 #include "cmd_parse.h"
 
 int main(void)
 {
+    struct vm_context *vm = vm_alloc(256);
+    vm_init(vm, "setLEDCount 20\n   setLEDCount ll");
+
+    vm_execute(vm);
+
+    vm_free(vm);
+
+    /*
     struct lexer *lex = lexer_alloc();
     lexer_init_str(lex, "setLEDCount 20\nsetLEDCount ll");
 
@@ -19,5 +26,5 @@ int main(void)
         }
     }
     
-    lexer_free(lex);
+    lexer_free(lex);*/
 }

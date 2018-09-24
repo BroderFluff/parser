@@ -3,8 +3,8 @@
 
 struct vm_context;
 
-struct vm_context * create_vm(int num_inst);
-void                destroy_vm();
-int                 exec_vm(struct vm_context *vm);
+struct vm_context * vm_alloc(int num_inst);
+void                vm_free(struct vm_context *vm);
+int                 vm_execute(const struct vm_context *vm);
 
 #endif // VM_H__
