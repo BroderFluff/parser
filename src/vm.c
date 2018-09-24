@@ -14,11 +14,12 @@ struct vm_context {
     int     inst_base[];
 };
 
-struct vm_context *vm_alloc(int num_insts)
+struct vm_context *vm_alloc(int capacity)
 {
-    struct vm_context *vm = malloc(sizeof (struct vm_context) + sizeof(int) * num_insts);
+    struct vm_context *vm = malloc(sizeof (struct vm_context) + sizeof(int) * capacity);
     assert(vm /* Out of memory! */);
-    vm->num_insts = num_insts;
+    vm->capacity = capacity;
+    vm->length = 0;
     vm->status = 0;
     return vm;
 }
