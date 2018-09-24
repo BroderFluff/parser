@@ -3,7 +3,7 @@
 
 #include "lexer.h"
 
-enum command_type {
+enum cmd_type {
     CMD_SET_DEBUG,
     CMD_GET_VERSION_NUMBER,
     CMD_SET_LED_COUNT,
@@ -15,22 +15,28 @@ enum command_type {
     CMD_ADD_ANIMATION_DELAY_MS,
     CMD_ADD_ANIMATION_DELAY_S,
     CMD_ADD_ANIMATION_SOLID_COLOR,
+    CMD_ADD_ANIMATION_STARFALL,
     CMD_ADD_ANIMATION_START_LOOP,
     CMD_ADD_ANIMATION_END_LOOP,
+    NUM_CMDS,
 };
 
-struct command {
-    enum command_type       type;
+struct cmd_desc {
+    enum cmd_type       cmd_type;
+    const char *        name;
+    int                 num_params;
+};
+
+extern const struct cmd_desc cmd_descs[];
+ 
+/*
+struct cmd {
+    enum cmd_type           type;
     int                     num_params;
     int                     params[8];
 };
+*/
 
-void                        register_command(const char *name, int num_params);
-struct command *            parse_next_command(struct lexer *lex);
-
-struct command_queue {
-    int                     num_commands;
-    struct command          commands[];
-};
+struct cmd *            parse_next_command(struct lexer *lex);
 
 #endif // CMD_PARSE_H__

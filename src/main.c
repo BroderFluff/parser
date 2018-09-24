@@ -10,7 +10,7 @@ int main(void)
     lexer_init_str(lex, "setLEDCount 20\nsetLEDCount ll");
 
     while (!lexer_is_eof(lex)) {
-        struct command *cmd = parse_next_command(lex);
+        parse_next_command(lex);
         if (cmd) {
             printf("num params: %d\n", cmd->num_params);
             printf("param 0: %d\n", cmd->params[0]);

@@ -2,6 +2,7 @@
     "files.associations": {
         "stdlib.h": "c",
         "lexer.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "cmd_parse.h": "c"
     }
 }

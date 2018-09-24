@@ -1,18 +1,21 @@
 BIN := parser
 SRC := $(wildcard src/*.c)
 OBJ := $(SRC:src/%.c=obj/%.o)
-#OBJ := $(addprefix obj/, $(notdir $(SRC)))
+
 # Pre-processor flags
 CPPFLAGS += \
 	-Iinclude/
+	
 # Compiler flags
 CFLAGS += \
 	-Wall \
 	-Wextra \
 	-pedantic \
 	-O2
+
 # Linker flags
 LDFLAGS += 
+
 # External libs
 LDLIBS +=
 

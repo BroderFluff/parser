@@ -28,8 +28,7 @@ void                token_clear(struct token *tok);
 void                token_append_char(struct token *tok, int ch);
 // Tidy up and set the token type of the token
 void                token_finish(struct token *tok, enum token_type type);
-// Query token type
-int                 token_is_type(const struct token *tok, enum token_type type);
+// Query the token_type of token
 enum token_type     token_get_type(const struct token *tok);
 // Return this token of name type
 const char *        token_get_name(const struct token *tok);
