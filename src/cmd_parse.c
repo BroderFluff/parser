@@ -38,9 +38,28 @@ static void vm_add(int inst) {
     }
 }
 
-int parse_
+int parse_next_inst(struct lexer *lex, int *inst) {
+    if (!inst) {
+        return 0;
+    }
+    struct token tok;
+    if (lexer_except_type(lex, &tok, TT_NAME)) {
+        return 0;
+    }
 
-int parse_next_command(struct lexer *lex)
+    int offset = 0;
+    const char *cmd_name = token_get_name(&tok);
+    for (int i = 0; i < NUM_CMDS; ++i) {
+        if (strcmp(cmd_name, cmd_descs[i].name) == 0) {
+            inst[offset++] = i;
+            for (int j = 0; j < )
+        }
+    }
+
+
+}
+
+int dparse_next_command(struct lexer *lex)
 {
     struct token tok;
     if (!lexer_expect_type(lex, &tok, TT_NAME)) {

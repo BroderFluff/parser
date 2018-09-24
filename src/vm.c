@@ -18,9 +18,11 @@ struct vm_context *vm_alloc(int capacity)
 {
     struct vm_context *vm = malloc(sizeof (struct vm_context) + sizeof(int) * capacity);
     assert(vm /* Out of memory! */);
+
     vm->capacity = capacity;
     vm->length = 0;
     vm->status = 0;
+
     return vm;
 }
 
@@ -34,7 +36,6 @@ void vm_init(struct vm_context *vm, const char *str)
     int index = 0;
     struct lexer *lex = lexer_alloc();
     lexer_init_str(lex, str);
-
     while (!lexer_is_eof(lex)) {
         index += parse_next_inst(lex, &vm->inst_base[index]);
     }

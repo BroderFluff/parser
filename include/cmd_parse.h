@@ -27,10 +27,7 @@ struct cmd_desc {
     int                         num_params;
 };
 
-//extern const struct cmd_desc    cmd_descs[];
-
-int                     parse_next_inst(struct lexer *lex, int *inst_base);
-
+int                             parse_next_inst(struct lexer *lex, int *inst_base);
 const struct cmd_desc *         parse_get_cmd(enum cmd_type type);
 struct cmd *                    parse_next_command(struct lexer *lex);
 
