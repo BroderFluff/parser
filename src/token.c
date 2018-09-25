@@ -34,7 +34,7 @@ void token_append_char(struct token *tok, int ch)
     if (tok->len >= TOKEN_MAX_LENGTH) {
         return;
     }
-    tok->str[tok->len++] = ch;
+    tok->str[tok->len++] = (char) ch;
 }
 
 void token_finish(struct token *tok, enum token_type type)
@@ -62,6 +62,5 @@ const char *token_get_name(const struct token *tok)
 int token_get_integer(const struct token *tok)
 {
     assert(tok->type == TT_INTEGER);
-    return strtol(tok->str, NULL, 10);
+    return (int) strtol(tok->str, NULL, 10);
 }
-

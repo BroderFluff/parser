@@ -23,26 +23,28 @@ const struct cmd_desc cmd_descs[] = {
     { CMD_ADD_ANIMATION_END_LOOP, "addAnimationEndLoop", 0 },
 };
 
-int parse_next_inst(struct lexer *lex, int *inst) {
+size_t parse_next_command(struct lexer *lex, int *inst) {
     if (!inst) {
         return 0;
     }
 
     struct token tok;
-    if (lexer_expect_type(lex, &tok, TT_NAME)) {
+    if (!lexer_expect_type(lex, &tok, TT_NAME)) {
         return 0;
     }
 
-    int offset = 0;
+    size_t offset = 0;
     const char *cmd_name = token_get_name(&tok);
     for (int i = 0; i < NUM_CMDS; ++i) {
         if (strcmp(cmd_name, cmd_descs[i].name) == 0) {
+            printf("Found token \"%s\"\n", tok.str);
             inst[offset++] = i;
+
             for (int j = 0; j < cmd_descs[i].num_params; ++j) {
                 if (!lexer_expect_type(lex, &tok, TT_INTEGER)) {
-                    return 0;
+                    return (size_t)-1;
                 }
-
+                inst[offset++] = token_get_integer(&tok);
             }
         }
     }

@@ -8,15 +8,20 @@ CPPFLAGS += \
 
 # Compiler flags
 CFLAGS += \
-	-O \
-	-g \
-	-fsanitize=address \
+	-O3 \
 	-Wall \
 	-Wextra \
-	-pedantic
+	-Wpedantic \
+	-Wformat \
+	-Wwrite-strings \
+	-Werror \
+	-Wconversion \
+	-Wpointer-arith \
+	-Wshadow \
+	-DNDEBUG
 
 # Linker flags
-LDFLAGS += -fsanitize=address
+LDFLAGS += 
 
 # External libs
 LDLIBS +=
@@ -24,6 +29,27 @@ LDLIBS +=
 .PHONY: all clean
 
 all: $(BIN)
+
+debug: CFLAGS += \
+	-O3 \
+	-Wall \
+	-Wextra \
+	-Wpedantic \
+	-Wformat \
+	-Wwrite-strings \
+	-Werror \
+	-Wconversion \
+	-Wpointer-arith \
+	-Wshadow \
+	-Og \
+	-g \
+	-DDEBUG \
+	-fsanitize=address \
+	-fsanitize=signed-integer-overflow
+debug: LDFLAGS += \
+	-fsanitize=address \
+	-fsanitize=signed-integer-overflow
+debug: $(BIN)
 
 $(BIN): $(OBJ)
 	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@

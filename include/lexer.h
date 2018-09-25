@@ -12,7 +12,7 @@ struct lexer *      lexer_alloc();
 void                lexer_free(struct lexer *lex);
 int                 lexer_init_str(struct lexer *lex, const char *str);
 int                 lexer_is_eof(const struct lexer *lex);
-int                 lexer_expect_type(struct lexer *lex, struct token *tok, enum token_type type);
-int                 lexer_next_token(struct lexer *lex, struct token *tok);
+long                lexer_expect_type(struct lexer *lex, struct token *tok, enum token_type type);
+long                lexer_next_token(struct lexer *lex, struct token *tok);
 
 #endif // LEXER_H__

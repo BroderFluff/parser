@@ -34,6 +34,6 @@ const char *        token_type_to_str(enum token_type type);
 // Return this token of name type
 const char *        token_get_name(const struct token *tok);
 // Return this token as integer
-int                 token_get_integer(const struct token *tok);
+int            token_get_integer(const struct token *tok);
 
 #endif // TOKEN_H__

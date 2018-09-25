@@ -5,8 +5,12 @@
 #include "token.h"
 #include "lexer.h"
 
+#ifdef DEBUG
 #define VALIDATE_LEXER(lex) \
     assert(lex->c);
+#else
+#define VALIDATE_LEXER(lex) 
+#endif
 
 struct lexer {
     // Points to current position in str
@@ -43,12 +47,12 @@ int lexer_is_eof(const struct lexer *lex)
     return lex->c && (*lex->c == '\0');
 }
 
-static int skip_spaces(struct lexer *lex)
+static long skip_spaces(struct lexer *lex)
 {
     VALIDATE_LEXER(lex);
     const char *start = lex->c;
     while (!lexer_is_eof(lex) && 
-            isspace(*lex->c)) {
+            (isspace(*lex->c) > 0)) {
         if (*(lex->c) == '\n') {
             lex->line++;
         }
@@ -57,57 +61,81 @@ static int skip_spaces(struct lexer *lex)
     return lex->c - start;
 }
 
+/**
+ *  Parses a TT_NAME from lex into tok.
+ *  A name may only consist of alphanum-characters
+ *  and start with a alpha.
+ * 
+ *  returns number of characters parsed
+ */
 static int read_name(struct lexer *lex, struct token *tok)
 {
-    VALIDATE_LEXER(lex);
     token_clear(tok);
-    while (!lexer_is_eof(lex) &&
-            (isalpha(*lex->c) ||
-            isdigit(*lex->c))) {
+
+    while (!lexer_is_eof(lex) && isalnum(*lex->c)) {
         token_append_char(tok, *lex->c);
-        ++(lex->c);
+        ++lex->c;
     }
+
     token_finish(tok, TT_NAME);
     return tok->len;
 }
 
+/**
+ *  Parses a TT_INTEGER from lex into tok.
+ *  An integer may only consist of digits ('0' - '9').
+ * 
+ *  returns number of characters parsed
+ */
 static int read_number(struct lexer *lex, struct token *tok)
 {
     token_clear(tok);
-    while (lex->c && isdigit(*lex->c)) {
+
+    while (!lexer_is_eof(lex) && isdigit(*lex->c)) {
         token_append_char(tok, *lex->c);
-        ++(lex->c);
+        ++lex->c;
     }
+
     token_finish(tok, TT_INTEGER);
     return tok->len;
 }
 
-int lexer_next_token(struct lexer *lex, struct token *tok)
+/**
+ *  Parses the next token available in lex, into tok.
+ *  Skips spaces preceeding the token.
+ * 
+ *  returns number of characters parsed (spaces included)
+ */
+long lexer_next_token(struct lexer *lex, struct token *tok)
 {
-    skip_spaces(lex);
+    assert(tok);
+    VALIDATE_LEXER(lex);
+    long num_ch = skip_spaces(lex);
 
     if (lexer_is_eof(lex)) {
         return 0;
     }
 
-    if (isalpha(*lex->c)) {
-        return read_name(lex, tok);
-    } else if (isdigit(*lex->c)) {
-        return read_number(lex, tok);
+    if (isalpha(*(lex->c))) {
+        num_ch += read_name(lex, tok);
+    } else if (isdigit(*(lex->c))) {
+        num_ch += read_number(lex, tok);
+    } else {
+        printf("Unknown token!\n");
     }
-
-    return 0;
+    
+    printf("read %ld chars : [%.*s\n", num_ch, (int) num_ch, lex->c - num_ch);
+    return num_ch;
 }
 
-int lexer_expect_type(struct lexer *lex, struct token *tok, enum token_type type)
+long lexer_expect_type(struct lexer *lex, struct token *tok, enum token_type type)
 {
-    int num = lexer_next_token(lex, tok);
-    if (num > 0) {
+    long num_ch = lexer_next_token(lex, tok);
+    if (num_ch > 0L) {
         if (tok->type != type) {
-            printf("Expected \"%s\" but found \"%s\"", token_type_to_str(type), token_type_to_str(tok->type));
-            return 0;
+            printf("Expected \"%s\" but found \"%s\"\n", token_type_to_str(type), token_type_to_str(tok->type));
+            return 0L;
         }
     }
-
-    return num;    
+    return num_ch;    
 }

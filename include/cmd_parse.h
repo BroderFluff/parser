@@ -2,6 +2,7 @@
 #define CMD_PARSE_H__
 
 #include "lexer.h"
+#include <stddef.h>
 
 enum cmd_type {
     CMD_SET_DEBUG,
@@ -27,8 +28,6 @@ struct cmd_desc {
     int                         num_params;
 };
 
-int                             parse_next_inst(struct lexer *lex, int *inst_base);
-const struct cmd_desc *         parse_get_cmd(enum cmd_type type);
-struct cmd *                    parse_next_command(struct lexer *lex);
+size_t                             parse_next_command(struct lexer *lex, int *inst_base);
 
 #endif // CMD_PARSE_H__

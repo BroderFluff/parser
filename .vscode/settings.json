@@ -4,6 +4,7 @@
         "lexer.h": "c",
         "string.h": "c",
         "cmd_parse.h": "c",
-        "vm.h": "c"
+        "vm.h": "c",
+        "token.h": "c"
     }
 }

@@ -7,14 +7,16 @@
 #include <string.h>
 #include <assert.h>
 
+typedef int inst_t;
+
 struct vm_context {
-    int     status;
-    int     capacity;
-    int     length;
-    int     inst_base[];
+    int         status;
+    size_t      capacity;
+    size_t      length;
+    int         inst_base[];
 };
 
-struct vm_context *vm_alloc(int capacity)
+struct vm_context *vm_alloc(const size_t capacity)
 {
     struct vm_context *vm = malloc(sizeof (struct vm_context) + sizeof(int) * capacity);
     assert(vm /* Out of memory! */);
@@ -33,11 +35,15 @@ void vm_init(struct vm_context *vm, const char *str)
         return;
     }
 
-    int index = 0;
+    size_t index = 0;
     struct lexer *lex = lexer_alloc();
     lexer_init_str(lex, str);
     while (!lexer_is_eof(lex)) {
-        index += parse_next_inst(lex, &vm->inst_base[index]);
+        index += parse_next_command(lex, &vm->inst_base[index]);
+        if (index >= vm->capacity) {
+            printf("Ran out of instruction-memory while parsing!!!");
+            return;
+        }
     }
 
     if (lex) {
@@ -55,9 +61,17 @@ void vm_free(struct vm_context *vm)
 
 int vm_execute(const struct vm_context *vm)
 {
-    int current_inst = vm->inst_base[0];
-    while (current_inst) {
+    const int *inst = &vm->inst_base[0];
+    while (*inst) {
+        printf("inst : %d\n", *inst);
+        switch (*inst) {
+            case CMD_SET_LED_COUNT:
 
+
+                break;
+        }
+
+        ++inst;
     }
 
     return 0;
