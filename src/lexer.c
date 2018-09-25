@@ -124,7 +124,7 @@ long lexer_next_token(struct lexer *lex, struct token *tok)
         printf("Unknown token!\n");
     }
     
-    printf("read %ld chars : [%.*s\n", num_ch, (int) num_ch, lex->c - num_ch);
+   // printf("read %ld chars : [%.*s\n", num_ch, (int) num_ch, lex->c - num_ch);
     return num_ch;
 }
 

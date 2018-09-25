@@ -59,18 +59,34 @@ void vm_free(struct vm_context *vm)
     free(vm);
 }
 
+static void set_debug()
+{
+
+}
+
+static int get_version_number()
+{
+    return 0;
+}
+
+static void set_led_count(int a)
+{
+    printf("set_led_count(%d)\n", a);
+}
+
 int vm_execute(const struct vm_context *vm)
 {
     const int *inst = &vm->inst_base[0];
     while (*inst) {
-        printf("inst : %d\n", *inst);
         switch (*inst) {
+            case CMD_SET_DEBUG:
+                break;
+            case CMD_GET_VERSION_NUMBER:
+                break;
             case CMD_SET_LED_COUNT:
-
-
+                set_led_count(*(++inst));
                 break;
         }
-
         ++inst;
     }
 
