@@ -1,5 +1,6 @@
 #include <ctype.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <assert.h>
 #include "token.h"
 #include "lexer.h"
@@ -103,6 +104,7 @@ int lexer_expect_type(struct lexer *lex, struct token *tok, enum token_type type
     int num = lexer_next_token(lex, tok);
     if (num > 0) {
         if (tok->type != type) {
+            printf("Expected \"%s\" but found \"%s\"", token_type_to_str(type), token_type_to_str(tok->type));
             return 0;
         }
     }

@@ -3,6 +3,7 @@
         "stdlib.h": "c",
         "lexer.h": "c",
         "string.h": "c",
-        "cmd_parse.h": "c"
+        "cmd_parse.h": "c",
+        "vm.h": "c"
     }
 }

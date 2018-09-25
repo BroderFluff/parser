@@ -23,27 +23,13 @@ const struct cmd_desc cmd_descs[] = {
     { CMD_ADD_ANIMATION_END_LOOP, "addAnimationEndLoop", 0 },
 };
 
-//struct vm {
-    int             inst_pool[MAX_NUM_COMMANDS];
-    int             num_insts = 0;
-//};
-
-//struct command              command_pool[MAX_NUM_COMMANDS];
-//static int                  num_alloced = 0;
-
-static void vm_add(int inst) {
-    inst_pool[num_insts++] = inst;
-    if (num_insts >= MAX_NUM_COMMANDS) {
-        num_insts %= MAX_NUM_COMMANDS;
-    }
-}
-
 int parse_next_inst(struct lexer *lex, int *inst) {
     if (!inst) {
         return 0;
     }
+
     struct token tok;
-    if (lexer_except_type(lex, &tok, TT_NAME)) {
+    if (lexer_expect_type(lex, &tok, TT_NAME)) {
         return 0;
     }
 
@@ -52,13 +38,19 @@ int parse_next_inst(struct lexer *lex, int *inst) {
     for (int i = 0; i < NUM_CMDS; ++i) {
         if (strcmp(cmd_name, cmd_descs[i].name) == 0) {
             inst[offset++] = i;
-            for (int j = 0; j < )
+            for (int j = 0; j < cmd_descs[i].num_params; ++j) {
+                if (!lexer_expect_type(lex, &tok, TT_INTEGER)) {
+                    return 0;
+                }
+
+            }
         }
     }
 
-
+    return offset;
 }
 
+#if 0
 int dparse_next_command(struct lexer *lex)
 {
     struct token tok;
@@ -87,6 +79,7 @@ int dparse_next_command(struct lexer *lex)
 
     return NULL;
 }
+#endif
 
 /*static struct command *command_alloc(enum cmd_type type)
 {

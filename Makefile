@@ -5,16 +5,18 @@ OBJ := $(SRC:src/%.c=obj/%.o)
 # Pre-processor flags
 CPPFLAGS += \
 	-Iinclude/
-	
+
 # Compiler flags
 CFLAGS += \
+	-O \
+	-g \
+	-fsanitize=address \
 	-Wall \
 	-Wextra \
-	-pedantic \
-	-O2
+	-pedantic
 
 # Linker flags
-LDFLAGS += 
+LDFLAGS += -fsanitize=address
 
 # External libs
 LDLIBS +=

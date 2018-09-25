@@ -2,6 +2,12 @@
 #include <assert.h>
 #include <stdlib.h>
 
+const char * token_type_names[] = {
+    "undefined",
+    "name",
+    "integer",
+};
+
 struct token* token_alloc()
 {
     struct token *tok = (struct token *) malloc(sizeof (struct token));
@@ -40,6 +46,11 @@ void token_finish(struct token *tok, enum token_type type)
 enum token_type token_get_type(const struct token *tok)
 {
     return tok->type;
+}
+
+const char *token_type_to_str(enum token_type type)
+{
+    return token_type_names[type];
 }
 
 const char *token_get_name(const struct token *tok)
